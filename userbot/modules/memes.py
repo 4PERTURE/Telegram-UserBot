@@ -118,7 +118,7 @@ async def stretch(e):
             message = textx
             message = str(message.message)
         count = random.randint(3, 10)
-        reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵ])", (r"\1" * count), message)
+        reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), message)
         await e.edit(reply_text)
 
 
@@ -150,8 +150,8 @@ async def faces(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         textx = await e.get_reply_message()
         message=e.text
-        if message[4:]:
-            message = str(message[6:])
+        if message[5:]:
+            message = str(message[5:])
         elif textx:
             message = textx
             message = str(message.message)
@@ -340,6 +340,24 @@ async def enable_killme(e):
         global DISABLE_RUN
         DISABLE_RUN = False
         await e.edit("```Done!```")
+
+
+@bot.on(events.NewMessage(outgoing=True, pattern="^.metoo"))
+@bot.on(events.MessageEdited(outgoing=True, pattern="^.metoo"))
+async def metoo(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        metoostr = [
+            "Me too thanks",
+            "Haha yes, me too",
+            "Same lol",
+            "Me irl",
+            "Same here",
+            "Haha yes",
+            "Me rn",
+        ]
+        index = random.randint(0, len(metoostr) - 1)
+        reply_text = metoostr[index]
+        await e.edit(reply_text)
 
 
 @bot.on(events.NewMessage(outgoing=True, pattern="^.mock"))
